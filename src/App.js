@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './App.css'
 
 function App() {
   const [users, setUsers] = useState([]);
@@ -39,7 +40,7 @@ function App() {
   };
 
   const deleteUser = (id) => {
-    axios.post('http://localhost:5000/deleteUser', { id })
+    axios.delete(`http://localhost:5000/deleteUser/${id}`)
       .then((response) => {
         setUsers(users.filter(user => user._id !== id));
       })
@@ -122,8 +123,9 @@ function App() {
           <li key={data._id}>
             <span>{data.name}</span>
             {data.imageUrl && <img src={`http://localhost:5000${data.imageUrl}`} alt="Data" width="100" />}
-            <button onClick={() => deleteUser(data._id)}>Delete</button>
             <button onClick={() => handleEdit(data)}>Update</button>
+
+            <button onClick={() => deleteUser(data._id)}>Delete</button>
           </li>
         ))}
       </ul>
